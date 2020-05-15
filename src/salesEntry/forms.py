@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import SalesEntry
+# from .models import SalesEntry
 
 # class SalesEntryForm(forms.ModelForm):
 #     class Meta:

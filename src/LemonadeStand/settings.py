@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'pages',
     'salesEntry',
     'salesStaff',
-    'drinkOrder'
+    'drinkOrder',
+    'salesComReport'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# DATETIME_INPUT_FORMATS = 

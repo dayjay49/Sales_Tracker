@@ -18,9 +18,12 @@ from django.urls import path
 
 from salesEntry.views import saleEntry_create_view
 from pages.views import home_view
+from salesComReport.views import getSalesReport_view, postSalesReport_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sales/form', saleEntry_create_view),
-    path('', home_view)
+    path('', home_view),
+    path('sales/report', getSalesReport_view),
+    path('sales/report/<int:staff_id>', postSalesReport_view, name='postReport')
 ]
