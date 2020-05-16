@@ -1,5 +1,8 @@
 from django.contrib import admin
 
 from .models import Lemonade
-# Register your models here.
-admin.site.register(Lemonade)
+
+class LemonadeAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
+
+admin.site.register(Lemonade, LemonadeAdmin)
