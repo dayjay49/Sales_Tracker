@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from django.contrib import messages
 
-from .forms import RawSalesEntryForm
+from .forms import RawSalesEntryForm, readOnlySingleForm
 from .models import SalesEntry
 from drinkOrder.models import DrinkOrder
 from drinkOrder.forms import DrinkOrderFormset
@@ -32,39 +33,14 @@ def saleEntry_create_view(request):
                 drink_order = form.save(commit=False)
                 drink_order.saleEntry = currentEntry
                 drink_order.save()
+            
+            messages.success(request, 'The sales entry was successfully saved!')
+            return HttpResponseRedirect(request.path_info)
+            # salesEntryForm = RawSalesEntryForm()
+            # formset = DrinkOrderFormset()
 
     context= {
         'salesEntryForm': salesEntryForm,
         'formset': formset
     }
     return render(request, "salesEntry/salesEntry_create.html", context)
-
-    # my_form = RawSalesEntryForm()
-    # if request.method == "POST":
-    #     my_form = RawSalesEntryForm(request.POST)
-    #     if my_form.is_valid():
-    #         # now the data is good
-    #         STAFF_NAME = my_form.cleaned_data['staffName']
-    #         LEMONADE_NAME = my_form.cleaned_data['drinkName']
-    #         QUANTITY = my_form.cleaned_data['quantity']
-            
-    #         # get ID of corresponding staff
-    #         staffID = (SalesStaff.objects.get(name=STAFF_NAME)).id
-
-    #         currentEntry = SalesEntry.objects.create(
-    #             staffName=STAFF_NAME,
-    #             staffID=staffID
-    #         )
-
-    #         DrinkOrder.objects.create(
-    #             lemonade_name=LEMONADE_NAME,
-    #             quantity=QUANTITY,
-    #             saleEntry=currentEntry
-    #         )
-    #         my_form = RawSalesEntryForm()
-    # context = {
-    #     'form': my_form
-    # }
-    # return render(request, "salesEntry/salesEntry_create.html", context)
-
-    

@@ -19,3 +19,12 @@ class RawSalesEntryForm(forms.Form):
         queryset = SalesStaff.objects.all(),
         label='Staff'
     )
+
+class readOnlySingleForm(forms.Form):
+
+    currentTotalPrice = forms.CharField(
+        label='Current Total Price',
+        widget=forms.TextInput(attrs={
+            'readonly': 'readonly'
+        })
+    )

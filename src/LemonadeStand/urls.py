@@ -22,8 +22,8 @@ from salesComReport.views import getSalesReport_view, postSalesReport_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('sales/form', saleEntry_create_view),
+    path('sales/form/', saleEntry_create_view),
     path('', home_view),
-    path('sales/report', getSalesReport_view),
+    path('sales/report/', getSalesReport_view),
     path('sales/report/<int:staff_id>', postSalesReport_view, name='postReport')
 ]
