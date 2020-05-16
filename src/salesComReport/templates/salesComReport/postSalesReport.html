@@ -1,8 +1,44 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>THIS IS WHERE THE REPORT SHOULD SHOW</h1>
+<h1>SALES & COMMISSION REPORT OF {{ staffName }}</h1>
+<br />
+<br />
+<table style="width: 100%;">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Items Sold</th>
+      <th>Total Price</th>
+      <th>Commission Earned</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in salesEntriesList %}
+    <tr>
+      <td>{{ entry.date }}</td>
+      <td>
+        <ul>
+          {% for item in entry.items_sold %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </td>
+      <td>{{ entry.total_price }}</td>
+      <td>{{ entry.commission_earned }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>TOTALS</td>
+      <td></td>
+      <td>{{ sum_total_price }}</td>
+      <td>{{ total_com_earned }}</td>
+    </tr>
+  </tfoot>
+</table>
 
 <p>
-  <a href="/sales/report">New Report</a>
+  <a href="/sales/report">See Another Report</a>
 </p>
 {% endblock %}

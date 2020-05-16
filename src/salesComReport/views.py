@@ -3,6 +3,9 @@ from datetime import datetime
 
 from .forms import RawSalesReportForm
 from salesStaff.models import SalesStaff
+from salesEntry.models import SalesEntry
+from drinkOrder.models import DrinkOrder
+from lemonade.models import Lemonade
 
 def getSalesReport_view(request):
     report_form = RawSalesReportForm()
@@ -32,17 +35,55 @@ def postSalesReport_view(request, staff_id):
     start_date_string = request.session.get('startDate')
     end_date_string = request.session.get('endDate')
 
-    # convert to DateTime objects so that we can make comparisons with
-    # other DateTime objects in the database
+    # convert to DateTime objects so that we can make comparisons with other DateTime objects in the database
     parse_format = '%m/%d/%Y %I:%M %p'
     startDate = datetime.strptime(start_date_string, parse_format)
     endDate = datetime.strptime(end_date_string, parse_format)
 
-    # TO DO: querying to get required information for the report
+    # Querying to get required information for the report
     commissionRate = (SalesStaff.objects.get(id=staff_id)).commissionRate
+    print(commissionRate)
 
+    # filter all entries of input staff between input start date and end date    
+    filteredSalesEntries = SalesEntry.objects.filter(
+        staffName=staff_name, 
+        date__range=(startDate, endDate)
+    ).order_by('date')
+
+    # creating a list of dictionaries to store necessary values for each sales entry of the report
+    salesEntry_list = []
+    sum_total_price = 0
+    for entry in filteredSalesEntries:
+        items_sold = []
+        total_entry_price = 0
+        lemonade_orders = DrinkOrder.objects.filter(saleEntry_id=entry.id)
+        # print("LEMONADE", lemonade_orders)
+
+        for order in lemonade_orders:
+            # since there are no duplicate orders of same drink brand, just append to items_sold
+            items_sold.append(order.lemonade_name)
+            price = (Lemonade.objects.get(name=order.lemonade_name)).price
+            order_price = order.quantity * price
+            total_entry_price += order_price
+
+        commission_earned = total_entry_price * commissionRate
+        # print(items_sold)
+        # print(total_entry_price)
+        # print(commission_earned)
+        salesEntry_list.append({
+            'date': entry.date.strftime("%b %d, %Y %I:%M %p"),
+            'items_sold': items_sold,
+            'total_price': total_entry_price,
+            'commission_earned': commission_earned
+        })
+        sum_total_price += total_entry_price
+
+    total_com_earned = sum_total_price * commissionRate
+    print(salesEntry_list)
     context = {
         'staffName': staff_name,
-        'commisionRate': commissionRate
+        'salesEntriesList': salesEntry_list,
+        'sum_total_price': sum_total_price,
+        'total_com_earned': total_com_earned
     }
     return render(request, "salesComReport/postSalesReport.html", context)

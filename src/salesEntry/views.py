@@ -16,7 +16,7 @@ def saleEntry_create_view(request):
         salesEntryForm = RawSalesEntryForm(request.POST)
         formset = DrinkOrderFormset(request.POST)
         if salesEntryForm.is_valid() and formset.is_valid():
-            print("BOTH FORMS ARE VALID")
+            print("BOTH FORMS ARE VALID AND ENTRY IS SAVED")
             # first save the sales entry form, as its reference will be used in
             # 'DrinkOrder'
             STAFF_NAME = salesEntryForm.cleaned_data['staffName']
@@ -30,11 +30,6 @@ def saleEntry_create_view(request):
                 drink_order = form.save(commit=False)
                 drink_order.saleEntry = currentEntry
                 drink_order.save()
-                # DrinkOrder.objects.create(
-                #     lemonade_name=form.cleaned_data['lemonade_name'],
-                #     quantity=form.cleaned_data['quantity'],
-                #     saleEntry=currentEntry
-                # )
 
     context= {
         'salesEntryForm': salesEntryForm,
