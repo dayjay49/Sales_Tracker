@@ -15,7 +15,9 @@ def saleEntry_create_view(request):
     elif request.method == "POST":
         salesEntryForm = RawSalesEntryForm(request.POST)
         formset = DrinkOrderFormset(request.POST)
-        if salesEntryForm.is_valid() and formset.is_valid():
+        salesEntryValid = salesEntryForm.is_valid()
+        formsetValid = formset.is_valid()
+        if salesEntryValid and formsetValid:
             print("BOTH FORMS ARE VALID AND ENTRY IS SAVED")
             # first save the sales entry form, as its reference will be used in
             # 'DrinkOrder'

@@ -3,3 +3,8 @@ th,
 td {
   border: 1px solid black;
 }
+
+.error input,
+.error select {
+  background-color: lightpink;
+}

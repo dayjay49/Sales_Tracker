@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STATICFILES_DIRS = [
+    "/Users/david/desktop/dev/MEGAComfort/src/static",
+]
 
 # Application definition
 
@@ -38,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party apps
+
+    # my own apps
     'lemonade',
     'pages',
     'salesEntry',
