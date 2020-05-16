@@ -1,7 +1,7 @@
 from django import forms
 
 from salesStaff.models import SalesStaff
-from lemonade.models import Lemonade
+
 
 class RawSalesEntryForm(forms.Form):
     # Staff Name
@@ -15,16 +15,16 @@ class RawSalesEntryForm(forms.Form):
         choices=staff_dropdown_list
     )
     
-    # Lemonade Name
-    lemonades = Lemonade.objects.all().order_by('name')
-    drink_dropdown_list = []
-    for drink in lemonades:
-        drink_dropdown_list.append((drink.name, drink.name))
+    # # Lemonade Name
+    # lemonades = Lemonade.objects.all().order_by('name')
+    # drink_dropdown_list = []
+    # for drink in lemonades:
+    #     drink_dropdown_list.append((drink.name, drink.name))
 
-    drinkName = forms.ChoiceField(
-        label='Lemonade Brand Name',
-        choices=drink_dropdown_list
-    )
+    # drinkName = forms.ChoiceField(
+    #     label='Lemonade Brand Name',
+    #     choices=drink_dropdown_list
+    # )
 
-    # Quantity
-    quantity = forms.IntegerField(label='Quantity')
+    # # Quantity
+    # quantity = forms.IntegerField(label='Quantity')
