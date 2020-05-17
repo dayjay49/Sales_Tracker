@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
-    "/Users/david/desktop/dev/MEGAComfort/src/static",
+    os.path.join(BASE_DIR, 'static')
 ]
 
 # Application definition

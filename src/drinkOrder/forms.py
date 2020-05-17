@@ -33,5 +33,7 @@ DrinkOrderFormset = inlineformset_factory(
         'quantity': forms.TextInput(attrs={'min': 1, 'type':'number'})
     },
     can_delete=False,
+    min_num=1,
+    validate_min=True
     # formset=CustomInlineFormset
 )
