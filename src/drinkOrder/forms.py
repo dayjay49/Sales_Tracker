@@ -25,10 +25,9 @@ DrinkOrderFormset = inlineformset_factory(
     SalesEntry, 
     DrinkOrder, 
     fields=('lemonade_name', 'quantity'),
-    extra=2,
+    extra=1,
     widgets={
         'lemonade_name': forms.Select(choices=drink_dropdown_list),
-        # 'quantity': forms.NumberInput(attrs={'class':'form-number'})
         'quantity': forms.TextInput(attrs={'min': 1, 'type':'number'})
     },
     can_delete=False,

@@ -58,8 +58,9 @@ def postSalesReport_view(request, staff_id):
         lemonade_orders = DrinkOrder.objects.filter(saleEntry_id=entry.id)
 
         for order in lemonade_orders:
-            # since there are no duplicate orders of same drink brand, just append to items_sold
-            items_sold.append(order.lemonade_name)
+            # make sure there are no duplicates in items_sold list
+            if order.lemonade_name not in items_sold:
+                items_sold.append(order.lemonade_name)
             price = (Lemonade.objects.get(name=order.lemonade_name)).price
             order_price = order.quantity * price
             total_entry_price += order_price
