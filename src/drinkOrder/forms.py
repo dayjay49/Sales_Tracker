@@ -12,6 +12,8 @@ drink_dropdown_list = []
 for drink in lemonades:
     drink_dropdown_list.append((drink.name, drink.name))
 
+# num_lemonade_types = Lemonade.objects.count()
+
 # class CustomInlineFormset(BaseInlineFormSet):
 #     def clean(self):
 #         super().clean()

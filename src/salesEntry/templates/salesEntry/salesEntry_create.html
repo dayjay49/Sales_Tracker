@@ -8,7 +8,7 @@
   </div>
   {{ formset.management_form }}
   <div class="form-set">
-    {% for form in formset %}
+    {% for form in formset %} {{form.non_field_errors}} {{form.errors}}
     <div class="dynamic-form">
       {{ form.as_table }}
     </div>
@@ -17,7 +17,7 @@
   <br />
   <div class="row spacer">
     <div class="col-4 offset-2">
-      <button type="submit" class="btn btn-block btn-primary">
+      <button type="submit" class="submit-sales-entry">
         Save Entry
       </button>
     </div>
@@ -31,7 +31,9 @@
 
 <script type="text/javascript">
   $(function () {
-    $(".dynamic-form").formset();
+    $(".dynamic-form").formset({
+      prefix: "{{ formset.prefix }}",
+    });
   });
 </script>
 
