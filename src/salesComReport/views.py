@@ -22,7 +22,7 @@ def getSalesReport_view(request):
             request.session['staffName'] = staffName
             request.session['startDate'] = startDateTimeString
             request.session['endDate'] = endDateTimeString
-            redirect_url = "report/" + str(staffID)
+            redirect_url = "/sales/report/" + str(staffID)
             return redirect(redirect_url)
     context = {
         'form': report_form

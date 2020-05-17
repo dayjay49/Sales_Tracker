@@ -4,6 +4,8 @@
   <head>
     <title>MEGAComfort Sales Tracker</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <!-- Google CDN for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body style="background-color: #ebf7fc;">
     {% include 'header.html' %}
@@ -14,9 +16,6 @@
       </div>
       {% endfor %} {% endif %} {% block content %} {% endblock %}
     </main>
-
-    <!-- Google CDN for jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
       setTimeout(function () {

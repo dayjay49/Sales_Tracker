@@ -23,8 +23,8 @@
           {% endfor %}
         </ul>
       </td>
-      <td>{{ entry.total_price }}</td>
-      <td>{{ entry.commission_earned }}</td>
+      <td>${{ entry.total_price|floatformat:2 }}</td>
+      <td>${{ entry.commission_earned|floatformat:2 }}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -34,8 +34,8 @@
         <b>TOTALS</b>
       </td>
       <td></td>
-      <td>{{ sum_total_price }}</td>
-      <td>{{ total_com_earned }}</td>
+      <td>${{ sum_total_price|floatformat:2 }}</td>
+      <td>${{ total_com_earned|floatformat:2 }}</td>
     </tr>
   </tfoot>
 </table>

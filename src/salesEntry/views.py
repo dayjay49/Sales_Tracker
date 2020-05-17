@@ -36,8 +36,6 @@ def saleEntry_create_view(request):
             
             messages.success(request, 'The sales entry was successfully saved!')
             return HttpResponseRedirect(request.path_info)
-            # salesEntryForm = RawSalesEntryForm()
-            # formset = DrinkOrderFormset()
 
     context= {
         'salesEntryForm': salesEntryForm,
