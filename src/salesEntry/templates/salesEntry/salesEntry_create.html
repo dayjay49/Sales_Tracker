@@ -24,6 +24,12 @@
   </div>
 </form>
 
+<br />
+<div>
+  The total price of orders in current entry:
+  <input class="entry-total-price" value="" disabled />
+</div>
+
 <script
   src="{% static 'js/jquery.formset.js' %}"
   type="text/javascript"
@@ -35,6 +41,12 @@
       prefix: "{{ formset.prefix }}",
     });
   });
+</script>
+
+<script>
+  $();
+  $("#yourdropdownid option:selected").text();
+  var numItems = $(".yourclass").length;
 </script>
 
 {% endblock %}

@@ -20,11 +20,11 @@ class RawSalesEntryForm(forms.Form):
         label='Staff'
     )
 
-class readOnlySingleForm(forms.Form):
+# class readOnlySingleFieldForm(forms.Form):
 
-    currentTotalPrice = forms.CharField(
-        label='Current Total Price',
-        widget=forms.TextInput(attrs={
-            'readonly': 'readonly'
-        })
-    )
+#     currentTotalPrice = forms.CharField(
+#         label='Current Total Price',
+#         widget=forms.TextInput(attrs={
+#             'readonly': 'readonly'
+#         })
+#     )

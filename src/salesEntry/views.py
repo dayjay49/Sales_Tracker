@@ -1,21 +1,27 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 
-from .forms import RawSalesEntryForm, readOnlySingleForm
+from .forms import RawSalesEntryForm
 from .models import SalesEntry
 from drinkOrder.models import DrinkOrder
 from drinkOrder.forms import DrinkOrderFormset
 from salesStaff.models import SalesStaff
+from lemonade.models import Lemonade
 
 def saleEntry_create_view(request):
     
     if request.method == "GET":
         salesEntryForm = RawSalesEntryForm(request.GET or None)
-        formset = DrinkOrderFormset(queryset=DrinkOrder.objects.none())
+        formset = DrinkOrderFormset(
+            queryset=DrinkOrder.objects.none(),
+            # initial=[{'quantity': 1}]
+        )
+        # readOnlyField = readOnlySingleFieldForm(request.GET or None)
 
     elif request.method == "POST":
         salesEntryForm = RawSalesEntryForm(request.POST)
         formset = DrinkOrderFormset(request.POST)
+        # readOnlyField = readOnlySingleFieldForm(request.POST)
         salesEntryValid = salesEntryForm.is_valid()
         formsetValid = formset.is_valid()
         if salesEntryValid and formsetValid:
