@@ -14,9 +14,9 @@ def saleEntry_create_view(request):
         salesEntryForm = RawSalesEntryForm(request.GET or None)
         formset = DrinkOrderFormset(
             queryset=DrinkOrder.objects.none(),
-            # initial=[{'quantity': 1}]
+            initial=[{'quantity': 1}]
         )
-        # readOnlyField = readOnlySingleFieldForm(request.GET or None)
+        # lemonades = Lemonade.objects.all()
 
     elif request.method == "POST":
         salesEntryForm = RawSalesEntryForm(request.POST)
@@ -48,3 +48,9 @@ def saleEntry_create_view(request):
         'formset': formset
     }
     return render(request, "salesEntry/salesEntry_create.html", context)
+
+
+def load_price(request):
+    drink_name = request.GET.get('lemonade')
+    price = (Lemonade.objects.get(name=drink_name)).price
+    return render(request, "price.html", {"price": price})

@@ -12,11 +12,12 @@ class DrinkOrder(models.Model):
         on_delete=models.CASCADE,
         related_name='saleEntry'
     )
-    # lemonade_name = models.CharField(max_length=40)
+    # THIS IS ACTUALLY THE LEMONADE MODEL OBJECT ITSELF (not its String name)
     lemonade_name = models.ForeignKey(
         Lemonade, 
         on_delete=models.CASCADE,
-        related_name='lemonade_name'
+        related_name='lemonade_name',
+        default=Lemonade.objects.first().name
     )
     # lemonade_name = forms.ModelChoiceField(
     #     queryset = Lemonade.objects.all(),
@@ -24,9 +25,13 @@ class DrinkOrder(models.Model):
     # )
     quantity = models.IntegerField(default=0)
     # lemonade_name_id = models.IntegerField(blank=True, default=0)
+
     # price_per_drink = models.DecimalField(
     #     max_digits=10, 
-    #     decimal_places=2
+    #     decimal_places=2,
+    #     default=Lemonade.objects.first().price
+    #     # disabled=True
+    #     # widget=forms.TextInput(attrs={'readonly': 'readonly'})
     # )
 
     def __str__(self):

@@ -1,6 +1,11 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 
-<form class="form-horizontal" method="POST" action="">
+<form
+  id="sales-form"
+  method="POST"
+  action=""
+  load-price-url="{% url 'ajax_load_price' %}"
+>
   {% csrf_token %}
   <h3>Please choose staff and the sales he/she has made</h3>
   <div>
@@ -9,7 +14,7 @@
   {{ formset.management_form }}
   <div class="form-set">
     {% for form in formset %} {{form.non_field_errors}} {{form.errors}}
-    <div class="dynamic-form">
+    <div class="dynamic-form" id="{{ form.id.auto_id }}">
       {{ form.as_table }}
     </div>
     {% endfor %}
@@ -43,10 +48,21 @@
   });
 </script>
 
-<script>
-  $();
-  $("#yourdropdownid option:selected").text();
-  var numItems = $(".yourclass").length;
-</script>
+<!-- <script>
+  function getDrinkPrice(drink_name) {
+    var url = $("#sales-form").attr("load-price-url"); // get url of the 'load_price' view
+    // initialize AJAX request
+    $.ajax({
+      url: url,
+      data: {
+        lemonade: drink_name, // add drink_id to GET parameter
+      },
+      success: function (price) {
+        // `price` is data returned by 'load_price' view
+        $("#id_saleEntry-");
+      },
+    });
+  }
+</script> -->
 
 {% endblock %}
