@@ -14,7 +14,7 @@
   {{ formset.management_form }}
   <div class="form-set">
     {% for form in formset %} {{form.non_field_errors}} {{form.errors}}
-    <div class="dynamic-form" id="{{ form.id.auto_id }}">
+    <div class="dynamic-form">
       {{ form.as_table }}
     </div>
     {% endfor %}
@@ -31,8 +31,8 @@
 
 <br />
 <div>
-  The total price of orders in current entry:
-  <input class="entry-total-price" value="" disabled />
+  The total price of orders in current entry: $
+  <input id="entry-total-price" value="1.50" disabled />
 </div>
 
 <script
@@ -41,15 +41,28 @@
 ></script>
 
 <script type="text/javascript">
+  // To dynamically add/remove forms in formset
   $(function () {
     $(".dynamic-form").formset({
       prefix: "{{ formset.prefix }}",
     });
   });
-</script>
 
-<!-- <script>
-  function getDrinkPrice(drink_name) {
+  // To prevent submission of form by pressing Enter key
+  $(document).ready(function () {
+    $(window).keydown(function (event) {
+      if (event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+
+  function updateDrink(drink_name, drink_name_id) {
+    var drink_price_id = drink_name_id.substring(0, 15) + "price_per_drink";
+    var order_price_id = drink_name_id.substring(0, 15) + "order_price";
+    var drink_quantity_id = drink_name_id.substring(0, 15) + "quantity";
+
     var url = $("#sales-form").attr("load-price-url"); // get url of the 'load_price' view
     // initialize AJAX request
     $.ajax({
@@ -57,12 +70,34 @@
       data: {
         lemonade: drink_name, // add drink_id to GET parameter
       },
-      success: function (price) {
-        // `price` is data returned by 'load_price' view
-        $("#id_saleEntry-");
+      success: function (response) {
+        // `response` is data returned by 'load_price' view
+        document.getElementById(drink_price_id).value = response.price;
+        var quantity = document.getElementById(drink_quantity_id).value;
+        var price_per_drink = document.getElementById(drink_price_id).value;
+        var order_price = quantity * price_per_drink;
+        document.getElementById(order_price_id).value = order_price;
+      },
+      error: function () {
+        alert("Ajax request failed...");
       },
     });
   }
-</script> -->
+
+  function updateQuantity(drink_quantity, drink_name_id) {
+    var drink_price_id = drink_name_id.substring(0, 15) + "price_per_drink";
+    var order_price_id = drink_name_id.substring(0, 15) + "order_price";
+
+    var quantity = Number(drink_quantity);
+    var price_per_drink = document.getElementById(drink_price_id).value;
+    var order_price = quantity * price_per_drink;
+    document.getElementById(order_price_id).value = order_price;
+    // var temp = document.getElementById("#entry-total-price").value;
+    // var price_per_drink = document.getElementById(price_field_id).value;
+    // var final_price = quantity * price_per_drink;
+    // temp += final_price;
+    // document.getElementById("#entry-total-price").value = temp;
+  }
+</script>
 
 {% endblock %}

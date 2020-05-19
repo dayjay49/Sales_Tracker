@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
+from django.http import JsonResponse
 
 from .forms import RawSalesEntryForm
 from .models import SalesEntry
@@ -43,7 +44,7 @@ def saleEntry_create_view(request):
             messages.success(request, 'The sales entry was successfully saved!')
             return HttpResponseRedirect(request.path_info)
 
-    context= {
+    context = {
         'salesEntryForm': salesEntryForm,
         'formset': formset
     }
@@ -53,4 +54,4 @@ def saleEntry_create_view(request):
 def load_price(request):
     drink_name = request.GET.get('lemonade')
     price = (Lemonade.objects.get(name=drink_name)).price
-    return render(request, "price.html", {"price": price})
+    return JsonResponse({'price': price})
