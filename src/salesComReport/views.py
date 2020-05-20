@@ -52,38 +52,45 @@ def postSalesReport_view(request, staff_id):
         date__range=(startDate, endDate)
     ).order_by('date')
 
-    # creating a list of dictionaries to store necessary values for each sales entry of the report
-    salesEntry_list = []
-    sum_total_price = 0
-    for entry in filteredSalesEntries:
-        items_sold = []
-        total_entry_price = 0
-        lemonade_orders = DrinkOrder.objects.filter(saleEntry_id=entry.id)
+    # Only show table if at least one entry made within given datetime range
+    if (filteredSalesEntries.count() > 0):
+        # creating a list of dictionaries to store necessary values for each sales entry of the report
+        salesEntry_list = []
+        sum_total_price = 0
+        for entry in filteredSalesEntries:
+            items_sold = []
+            total_entry_price = 0
+            lemonade_orders = DrinkOrder.objects.filter(saleEntry_id=entry.id)
 
-        for order in lemonade_orders:
-            # make sure there are no duplicates in items_sold list
-            if order.lemonade_name not in items_sold:
-                items_sold.append(order.lemonade_name)
-            price = (Lemonade.objects.get(name=order.lemonade_name)).price
-            order_price = order.quantity * price
-            total_entry_price += order_price
+            for order in lemonade_orders:
+                # make sure there are no duplicates in items_sold list
+                if order.lemonade_name not in items_sold:
+                    items_sold.append(order.lemonade_name)
+                price = (Lemonade.objects.get(name=order.lemonade_name)).price
+                order_price = order.quantity * price
+                total_entry_price += order_price
 
-        commission_earned = total_entry_price * commissionRate
+            commission_earned = total_entry_price * commissionRate
 
-        salesEntry_list.append({
-            'date': entry.date.strftime("%b %d, %Y %I:%M %p"),
-            'items_sold': items_sold,
-            'total_price': total_entry_price,
-            'commission_earned': commission_earned
-        })
-        sum_total_price += total_entry_price
+            salesEntry_list.append({
+                'date': entry.date.strftime("%b %d, %Y %I:%M %p"),
+                'items_sold': items_sold,
+                'total_price': total_entry_price,
+                'commission_earned': commission_earned
+            })
+            sum_total_price += total_entry_price
 
-    total_com_earned = sum_total_price * commissionRate
-    
-    context = {
-        'staffName': staff_name,
-        'salesEntriesList': salesEntry_list,
-        'sum_total_price': sum_total_price,
-        'total_com_earned': total_com_earned
-    }
-    return render(request, "salesComReport/postSalesReport.html", context)
+        total_com_earned = sum_total_price * commissionRate
+        
+        context = {
+            'staffName': staff_name,
+            'salesEntriesList': salesEntry_list,
+            'sum_total_price': sum_total_price,
+            'total_com_earned': total_com_earned,
+        }
+        return render(request, "salesComReport/postSalesReport.html", context)
+    else:
+        context = {
+            'staffName': staff_name,
+        }
+        return render(request, "salesComReport/noSales.html", context)
