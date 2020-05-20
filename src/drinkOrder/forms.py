@@ -34,6 +34,6 @@ DrinkOrderFormset = inlineformset_factory(
     extra=0,
     min_num=1,
     validate_min=True,
-    max_num=Lemonade.objects.count(),
+    max_num=4,
     validate_max=True
 )

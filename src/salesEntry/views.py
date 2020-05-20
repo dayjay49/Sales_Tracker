@@ -15,7 +15,7 @@ def saleEntry_create_view(request):
         salesEntryForm = RawSalesEntryForm(request.GET or None)
         formset = DrinkOrderFormset(
             queryset=DrinkOrder.objects.none(),
-            initial=[{'quantity': 1}]
+            initial=[{'quantity': 1}],
         )
 
     elif request.method == "POST":

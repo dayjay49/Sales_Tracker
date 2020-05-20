@@ -17,7 +17,7 @@ class DrinkOrder(models.Model):
         Lemonade, 
         on_delete=models.CASCADE,
         related_name='lemonade_name',
-        default=Lemonade.objects.first().name
+        # default=Lemonade.objects.first().name
     )
     
     quantity = models.IntegerField(
