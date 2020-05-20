@@ -9,12 +9,14 @@ Instructions to run this project locally
 4. cd into ‘src’ directory
 5. python manage.py makemigrations
 6. python manage.py migrate
-7. python mange.py createsuperuser
+7. python manage.py createsuperuser
 8. python manage.py runserver
 9. Go to http://127.0.0.1:8000/admin
    • create 4 lemonade drinks
    • create 4 staffs
-   NOW YOU ARE READY TO USE THE TRACKER
+   
+-----NOW YOU ARE READY TO USE THE TRACKER-------
+
 10. Go to http://127.0.0.1:8000/
 11. Start entering!!
 12. Check for reports too!!
