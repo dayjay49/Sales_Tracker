@@ -14,14 +14,17 @@ def getSalesReport_view(request):
         if report_form.is_valid():
             staffName = report_form.cleaned_data['staffName']
             staffID = (SalesStaff.objects.get(name=staffName)).id
+
             startDateTimeObj = report_form.cleaned_data['startDate']
             endDateTimeObj = report_form.cleaned_data['endDate']
             # converting dateTime objects to string so we can send them to next url
             startDateTimeString = startDateTimeObj.strftime("%m/%d/%Y %I:%M %p")
             endDateTimeString = endDateTimeObj.strftime("%m/%d/%Y %I:%M %p")
+
             request.session['staffName'] = staffName
             request.session['startDate'] = startDateTimeString
             request.session['endDate'] = endDateTimeString
+
             redirect_url = "/sales/report/" + str(staffID)
             return redirect(redirect_url)
     context = {
@@ -76,7 +79,7 @@ def postSalesReport_view(request, staff_id):
         sum_total_price += total_entry_price
 
     total_com_earned = sum_total_price * commissionRate
-    # print(salesEntry_list)
+    
     context = {
         'staffName': staff_name,
         'salesEntriesList': salesEntry_list,

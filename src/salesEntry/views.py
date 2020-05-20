@@ -17,12 +17,11 @@ def saleEntry_create_view(request):
             queryset=DrinkOrder.objects.none(),
             initial=[{'quantity': 1}]
         )
-        # lemonades = Lemonade.objects.all()
 
     elif request.method == "POST":
         salesEntryForm = RawSalesEntryForm(request.POST)
         formset = DrinkOrderFormset(request.POST)
-        # readOnlyField = readOnlySingleFieldForm(request.POST)
+        
         salesEntryValid = salesEntryForm.is_valid()
         formsetValid = formset.is_valid()
         if salesEntryValid and formsetValid:

@@ -18,7 +18,7 @@ class RawSalesReportForm(forms.Form):
 
     # Start Date
     startDate = forms.DateTimeField(
-        error_messages={'invalid': "Please enter in provided format -> MM/DD/YYYY H:M AM/PM"},
+        error_messages={'Invalid': "Please enter in provided format -> MM/DD/YYYY H:M AM/PM"},
         label='Start Date and Time',
         input_formats = ['%m/%d/%Y %I:%M %p'],
         widget=forms.DateInput(attrs={
@@ -29,7 +29,7 @@ class RawSalesReportForm(forms.Form):
     
     # End Date
     endDate = forms.DateTimeField(
-        error_messages={'invalid': "Please enter in provided format -> MM/DD/YYYY H:M AM/PM"},
+        error_messages={'Invalid': "Please enter in provided format -> MM/DD/YYYY H:M AM/PM"},
         label='End Date and Time',
         input_formats = ['%m/%d/%Y %I:%M %p'],
         widget=forms.DateInput(attrs={
