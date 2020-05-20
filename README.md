@@ -4,7 +4,7 @@ Sales tracking system for a lemonade stand!
 Instructions to run this project locally
 
 1. cd ----root directory of the project----
-2. virtual env .
+2. virtualenv .
 3. source bin/activate
 4. pip install –r requirements.txt
 5. cd into ‘src’ directory
