@@ -14,7 +14,7 @@ def getSalesReport_view(request):
         if report_form.is_valid():
             staffName = report_form.cleaned_data['staffName'].name
             staffID = (SalesStaff.objects.get(name=staffName)).id
-
+            
             startDateTimeObj = report_form.cleaned_data['startDate']
             endDateTimeObj = report_form.cleaned_data['endDate']
             # converting dateTime objects to string so we can send them to next url
