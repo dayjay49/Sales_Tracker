@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from django.forms import BaseInlineFormSet
+# from django.forms import BaseInlineFormSet
 
 from .models import DrinkOrder
 from salesEntry.models import SalesEntry
@@ -11,11 +11,8 @@ class DrinkOrderInlineForm(forms.ModelForm):
         model = DrinkOrder
         fields = [
             'lemonade_name', 
-            'quantity', 
-            'price_per_drink',
-            'order_price'
+            'quantity'
         ]
-        # fields = ['lemonade_name', 'quantity']
         widgets = {
             'quantity': forms.NumberInput(attrs={
                 'min': 1, 
@@ -25,24 +22,13 @@ class DrinkOrderInlineForm(forms.ModelForm):
             }),
             'lemonade_name': forms.Select(attrs={
                 'onchange': "updateDrink(this.options[this.selectedIndex].text, this.id);"
-            }),
-            'price_per_drink': forms.NumberInput(attrs={
-                # 'style': "display:none;",
-                'onchange': "alert(this);"
-            }),
-            'order_price': forms.NumberInput(attrs={
-                # 'style': "display:none;",
-                'onchange': "alert(this);"
-            }),
-            # 'price_per_drink': forms.HiddenInput(),
-            # 'order_price': forms.HiddenInput()
+            })
         }
 
 DrinkOrderFormset = inlineformset_factory(
     SalesEntry,
     DrinkOrder,
-    fields=('lemonade_name', 'quantity', 'price_per_drink', 'order_price'),
-    # fields=('lemonade_name', 'quantity'),
+    fields=('lemonade_name', 'quantity'),
     form=DrinkOrderInlineForm,
     can_delete=False,
     extra=0,

@@ -26,7 +26,6 @@ def saleEntry_create_view(request):
         salesEntryValid = salesEntryForm.is_valid()
         formsetValid = formset.is_valid()
         if salesEntryValid and formsetValid:
-            print("BOTH FORMS ARE VALID AND ENTRY IS SAVED")
             # first save the sales entry form, as its reference will be used in
             # 'DrinkOrder'
             STAFF_NAME = salesEntryForm.cleaned_data['staffName']

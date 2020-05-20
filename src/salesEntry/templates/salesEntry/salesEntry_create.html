@@ -31,8 +31,8 @@
 
 <br />
 <div>
-  The total price of orders in current entry: $
-  <input id="entry-total-price" value="1.50" disabled />
+  Total Price: $
+  <input type="number" id="entry-total-price" disabled />
 </div>
 
 <script
@@ -45,10 +45,14 @@
   $(function () {
     $(".dynamic-form").formset({
       prefix: "{{ formset.prefix }}",
+      addText: "Add another",
+      deleteText: "Remove",
+      added: add_to_list,
+      removed: remove_from_list,
     });
   });
 
-  // To prevent submission of form by pressing Enter key
+  // To prevent form submission through pressing Enter key
   $(document).ready(function () {
     $(window).keydown(function (event) {
       if (event.keyCode == 13) {
@@ -58,12 +62,65 @@
     });
   });
 
+  // Global array to keep track of price of each order of the current
+  // sales entry, and initializing the total entry price as the unit price of
+  // first lemonade type given through AJAX request
+  var order_prices_list = [];
+  var drink_name_field = document.getElementById(
+    "id_saleEntry-0-lemonade_name"
+  );
+  var drink_name =
+    drink_name_field.options[drink_name_field.selectedIndex].text;
+
+  // Get url of the 'load_price' view for any AJAX requests needed
+  const url = $("#sales-form").attr("load-price-url");
+
+  $.ajax({
+    url: url,
+    data: {
+      lemonade: drink_name,
+    },
+    success: function (response) {
+      var price = Number(response.price);
+      updatePricesList(0, price);
+    },
+  });
+
+  // Update entry total price based on the list of order prices of the entry
+  function updateEntryTotalPrice() {
+    console.log("---------------------------------------");
+    console.log("Entry List JUST BEFORE updating the total price is:");
+    console.log(order_prices_list);
+    var entry_total_price = 0;
+    for (i = 0; i < order_prices_list.length; i++) {
+      entry_total_price += parseFloat(order_prices_list[i]);
+    }
+
+    document.getElementById("entry-total-price").value = parseFloat(
+      entry_total_price
+    ).toFixed(2);
+    console.log(
+      "Updated TOTAL PRICE: " +
+        document.getElementById("entry-total-price").value
+    );
+    console.log("---------------------------------------");
+  }
+
+  // update price of order placed in 'index' of the prices_list
+  function updatePricesList(index, new_price) {
+    // update order price to new value
+    order_prices_list[index] = new_price;
+    // update total price accordingly
+    updateEntryTotalPrice();
+  }
+
   function updateDrink(drink_name, drink_name_id) {
     var drink_price_id = drink_name_id.substring(0, 15) + "price_per_drink";
-    var order_price_id = drink_name_id.substring(0, 15) + "order_price";
     var drink_quantity_id = drink_name_id.substring(0, 15) + "quantity";
+    var order_index = drink_name_id.substring(13, 14);
 
-    var url = $("#sales-form").attr("load-price-url"); // get url of the 'load_price' view
+    // var url = $("#sales-form").attr("load-price-url");
+
     // initialize AJAX request
     $.ajax({
       url: url,
@@ -72,31 +129,85 @@
       },
       success: function (response) {
         // `response` is data returned by 'load_price' view
-        document.getElementById(drink_price_id).value = response.price;
+        var price_per_drink = Number(response.price);
         var quantity = document.getElementById(drink_quantity_id).value;
-        var price_per_drink = document.getElementById(drink_price_id).value;
+        // make sure variable 'quantity' is 1 if there is no value ready in it
+        if (!quantity) {
+          quantity = 1;
+        }
         var order_price = quantity * price_per_drink;
-        document.getElementById(order_price_id).value = order_price;
+
+        updatePricesList(order_index, order_price);
       },
       error: function () {
         alert("Ajax request failed...");
       },
     });
   }
+  function updateQuantity(drink_quantity, drink_quantity_id) {
+    var drink_name_id = drink_quantity_id.substring(0, 15) + "lemonade_name";
+    var drink_price_id = drink_quantity_id.substring(0, 15) + "price_per_drink";
 
-  function updateQuantity(drink_quantity, drink_name_id) {
-    var drink_price_id = drink_name_id.substring(0, 15) + "price_per_drink";
-    var order_price_id = drink_name_id.substring(0, 15) + "order_price";
+    var drink_name_field = document.getElementById(drink_name_id);
+    var drink_name =
+      drink_name_field.options[drink_name_field.selectedIndex].text;
 
-    var quantity = Number(drink_quantity);
-    var price_per_drink = document.getElementById(drink_price_id).value;
-    var order_price = quantity * price_per_drink;
-    document.getElementById(order_price_id).value = order_price;
-    // var temp = document.getElementById("#entry-total-price").value;
-    // var price_per_drink = document.getElementById(price_field_id).value;
-    // var final_price = quantity * price_per_drink;
-    // temp += final_price;
-    // document.getElementById("#entry-total-price").value = temp;
+    var order_index = drink_name_id.substring(13, 14);
+
+    $.ajax({
+      url: url,
+      data: {
+        lemonade: drink_name,
+      },
+      success: function (response) {
+        var quantity = Number(drink_quantity);
+        var price_per_drink = Number(response.price);
+        var order_price = quantity * price_per_drink;
+
+        updatePricesList(order_index, order_price);
+      },
+    });
+  }
+
+  function add_to_list(form) {
+    var drink_name_id = form.get(0).children.item(1).id;
+
+    var drink_name_field = document.getElementById(drink_name_id);
+    var drink_name =
+      drink_name_field.options[drink_name_field.selectedIndex].text;
+
+    var order_index = drink_name_id.substring(13, 14);
+
+    $.ajax({
+      url: url,
+      data: {
+        lemonade: drink_name,
+      },
+      success: function (response) {
+        var price = Number(response.price);
+        updatePricesList(order_index, price);
+      },
+    });
+  }
+  function remove_from_list(form) {
+    var drink_name_id = form.get(0).children.item(1).id;
+    var removed_order_index = drink_name_id.substring(13, 14);
+    console.log(drink_name_id);
+    console.log(removed_order_index);
+
+    console.log("BEFORE removing -----------------");
+    console.log(order_prices_list);
+
+    // remove order price from price list
+    if (removed_order_index == 0) {
+      order_prices_list.shift();
+    } else {
+      order_prices_list.splice(removed_order_index, removed_order_index);
+    }
+
+    console.log("AFTER removing ------------------");
+    console.log(order_prices_list);
+    updateEntryTotalPrice();
   }
 </script>
 
