@@ -16,16 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from salesEntry.views import saleEntry_create_view, load_price
+from salesEntry.views import saleEntry_create_view, load_price, getSalesReport_view, postSalesReport_view
 from pages.views import home_view
-from salesComReport.views import getSalesReport_view, postSalesReport_view
+# from salesComReport.views import getSalesReport_view, postSalesReport_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('sales/form/', saleEntry_create_view),
-    path('', home_view),
-    path('sales/report/', getSalesReport_view),
-    path('sales/report/<int:staff_id>', postSalesReport_view),
+    path('admin/', admin.site.urls, name="admin_page"),
+    path('sales/form/', saleEntry_create_view, name="sales_entry_form"),
+    path('', home_view, name="home"),
+    path('sales/report/', getSalesReport_view, name="get_sales_report"),
+    path('sales/report/<int:staff_id>', postSalesReport_view, name="post_sales_report"),
 
     path('ajax/load-price/', load_price, name="ajax_load_price")
 ]

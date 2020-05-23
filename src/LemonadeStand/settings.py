@@ -47,9 +47,7 @@ INSTALLED_APPS = [
     'lemonade',
     'pages',
     'salesEntry',
-    'salesStaff',
-    'drinkOrder',
-    'salesComReport'
+    'salesStaff'
 ]
 
 MIDDLEWARE = [

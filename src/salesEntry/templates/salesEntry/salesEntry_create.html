@@ -66,9 +66,7 @@
   // sales entry, and initializing the total entry price as the unit price of
   // first lemonade type given through AJAX request
   var order_prices_list = [];
-  var drink_name_field = document.getElementById(
-    "id_saleEntry-0-lemonade_name"
-  );
+  var drink_name_field = document.getElementById("id_saleEntry-0-lemonade");
   var drink_name =
     drink_name_field.options[drink_name_field.selectedIndex].text;
 
@@ -145,7 +143,7 @@
     });
   }
   function updateQuantity(drink_quantity, drink_quantity_id) {
-    var drink_name_id = drink_quantity_id.substring(0, 15) + "lemonade_name";
+    var drink_name_id = drink_quantity_id.substring(0, 15) + "lemonade";
     var drink_price_id = drink_quantity_id.substring(0, 15) + "price_per_drink";
 
     var drink_name_field = document.getElementById(drink_name_id);
