@@ -5,8 +5,6 @@ from datetime import datetime
 
 from .forms import RawSalesEntryForm, DrinkOrderFormset, RawSalesReportForm
 from .models import SalesEntry, DrinkOrder
-# from drinkOrder.models import DrinkOrder
-# from drinkOrder.forms import DrinkOrderFormset
 from salesStaff.models import SalesStaff
 from lemonade.models import Lemonade
 

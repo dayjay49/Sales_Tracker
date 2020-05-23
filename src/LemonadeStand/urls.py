@@ -18,7 +18,6 @@ from django.urls import path
 
 from salesEntry.views import saleEntry_create_view, load_price, getSalesReport_view, postSalesReport_view
 from pages.views import home_view
-# from salesComReport.views import getSalesReport_view, postSalesReport_view
 
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin_page"),

@@ -42,6 +42,17 @@
 
 <p>
   {# CR: use url templatetag for internal URLs #}
-  <a href="/sales/report">Load Another Report</a>
+  <a href="{% url 'get_sales_report' %}">
+    <button type="button" class="load-another-report">
+      Load Another Report
+    </button>
+  </a>
+</p>
+<p>
+  <a href="{% url 'home' %}">
+    <button type="button" class="go-back-home">
+      Go to Home Page
+    </button>
+  </a>
 </p>
 {% endblock %}

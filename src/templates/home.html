@@ -2,9 +2,9 @@
 
 <h1>Welcome to MEGAComfort Sales Tracker!</h1>
 
-{#  CR: use url templatetag for internal URLs #}
-<a href="/sales/form">Submit Sale Entry</a>
+{# CR: use url templatetag for internal URLs #}
+<a href="{% url 'sales_entry_form' %}">Submit Sale Entry</a>
 <br />
 <br />
-<a href="/sales/report">See Sales & Commissions Report</a>
+<a href="{% url 'get_sales_report' %}">See Sales & Commissions Report</a>
 {% endblock %}
