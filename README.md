@@ -8,16 +8,15 @@ Instructions to run this project locally
 3. source bin/activate
 4. pip install –r requirements.txt
 5. cd into ‘src’ directory
-6. python manage.py makemigrations
-7. python manage.py migrate
-8. python manage.py createsuperuser
-9. python manage.py runserver
-10. Go to http://127.0.0.1:8000/admin
-   • create 4 lemonade drinks
-   • create 4 staffs
+6. python manage.py migrate
+7. python manage.py createsuperuser (username and password for admin page)
+8. python manage.py runserver
+9. Go and login to http://127.0.0.1:8000/admin
+10. Create 4 lemonade drinks
+11. Create 4 staffs
    
 -----NOW YOU ARE READY TO USE THE TRACKER-------
 
-11. Go to http://127.0.0.1:8000/
-12. Start entering!!
-13. Check for reports too!!
+12. Go to http://127.0.0.1:8000/
+13. Start entering sales entries!!
+14. Check for reports too!!
