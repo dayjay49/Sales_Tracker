@@ -9,14 +9,11 @@ Instructions to run this project locally
 4. pip install –r requirements.txt
 5. cd into ‘src’ directory
 6. python manage.py migrate
-7. python manage.py createsuperuser (username and password for admin page)
+7. python manage.py loaddata fixtures/initial_data_fixtures.json
 8. python manage.py runserver
-9. Go and login to http://127.0.0.1:8000/admin
-10. Create 4 lemonade drinks
-11. Create 4 staffs
    
 -----NOW YOU ARE READY TO USE THE TRACKER-------
 
-12. Go to http://127.0.0.1:8000/
-13. Start entering sales entries!!
-14. Check for reports too!!
+9. Go to http://127.0.0.1:8000/
+10. Start entering sales entries!!
+11. Check for reports too!!
