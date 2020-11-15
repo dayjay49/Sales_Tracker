@@ -1,6 +1,6 @@
 # Sales_Tracker
-Sales tracking system for a lemonade stand! 
-This was my first time trying Django as part of an interview assignment!
+Sales tracking prototype system for a lemonade stand! 
+This was my first time trying out Django!
 
 Instructions to run this project locally
 
